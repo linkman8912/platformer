@@ -6,113 +6,79 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xns4"]
 size = Vector2(126, 128)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_aiaue"]
-size = Vector2(29.5, 544.992)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7rbqf"]
+size = Vector2(1147, 7)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_81vak"]
-size = Vector2(29, 433.188)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xku31"]
+size = Vector2(9, 673)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ifj64"]
-size = Vector2(1196.5, 20)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0juxp"]
+size = Vector2(8, 671.5)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5a7wm"]
-size = Vector2(1141, 65)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lhxya"]
+size = Vector2(1173, 5)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tua43"]
-size = Vector2(25, 590.5)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qma2q"]
+size = Vector2(12, 548)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_csxb2"]
-size = Vector2(502, 58.5)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d708l"]
+size = Vector2(759, 30)
 
 [node name="Node2D" type="Node2D"]
-position = Vector2(524, 131)
+position = Vector2(644, 87)
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="Character" type="CharacterBody2D" parent="."]
+position = Vector2(417, 516)
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_66rbi")
 
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-position = Vector2(1000, 932)
+[node name="Sprite2D" type="Sprite2D" parent="Character"]
 texture = ExtResource("1_tuu3t")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(1000, 932)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Character"]
 shape = SubResource("RectangleShape2D_0xns4")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="RayCastLeft" type="RayCast2D" parent="Character"]
+target_position = Vector2(-70, 0)
 
-[node name="Area2D" type="Area2D" parent="StaticBody2D"]
+[node name="RayCastRight" type="RayCast2D" parent="Character"]
+target_position = Vector2(70, 0)
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D/Area2D"]
-position = Vector2(619, 211.992)
-shape = SubResource("RectangleShape2D_aiaue")
+[node name="Timer" type="Timer" parent="Character"]
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D/Area2D"]
-position = Vector2(621, 245.375)
-scale = Vector2(0.242187, 4.63086)
+[node name="WallsAndFloors" type="StaticBody2D" parent="."]
+
+[node name="Floor" type="CollisionShape2D" parent="WallsAndFloors"]
+position = Vector2(-71, 559.5)
+shape = SubResource("RectangleShape2D_7rbqf")
+
+[node name="FarLeftWall" type="CollisionShape2D" parent="WallsAndFloors"]
+position = Vector2(-650.5, 252)
+shape = SubResource("RectangleShape2D_xku31")
+
+[node name="FarRightWall" type="CollisionShape2D" parent="WallsAndFloors"]
+position = Vector2(504, 251.75)
+shape = SubResource("RectangleShape2D_0juxp")
+
+[node name="Ceiling" type="CollisionShape2D" parent="WallsAndFloors"]
+position = Vector2(-63.5, -82.5)
+shape = SubResource("RectangleShape2D_lhxya")
+
+[node name="MidWall" type="CollisionShape2D" parent="WallsAndFloors"]
+position = Vector2(238, 310)
+scale = Vector2(0.9, 0.9)
+shape = SubResource("RectangleShape2D_qma2q")
+
+[node name="Sprite2D" type="Sprite2D" parent="WallsAndFloors/MidWall"]
+position = Vector2(6.00815e-05, -2.50002)
+scale = Vector2(0.0937498, 4.22656)
 texture = ExtResource("1_tuu3t")
 
-[node name="Area2D3" type="Area2D" parent="StaticBody2D"]
+[node name="Platform" type="CollisionShape2D" parent="WallsAndFloors"]
+position = Vector2(-268, 443)
+shape = SubResource("RectangleShape2D_d708l")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D/Area2D3"]
-position = Vector2(369.25, 389.496)
-shape = SubResource("RectangleShape2D_aiaue")
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D/Area2D3"]
-position = Vector2(364, 333)
-scale = Vector2(0.234375, 3.40234)
+[node name="Sprite2D" type="Sprite2D" parent="WallsAndFloors/Platform"]
+position = Vector2(-1, 1)
+scale = Vector2(5.92188, 0.234375)
 texture = ExtResource("1_tuu3t")
-
-[node name="Area2D2" type="Area2D" parent="StaticBody2D"]
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D/Area2D2"]
-position = Vector2(-469, 292.594)
-shape = SubResource("RectangleShape2D_81vak")
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D/Area2D2"]
-position = Vector2(-484, 290.5)
-scale = Vector2(0.4375, 3.66406)
-texture = ExtResource("1_tuu3t")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-496, 275.312)
-shape = SubResource("RectangleShape2D_81vak")
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(363.5, 392)
-shape = SubResource("RectangleShape2D_aiaue")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(65.75, 514)
-shape = SubResource("RectangleShape2D_ifj64")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(65, -92)
-shape = SubResource("RectangleShape2D_5a7wm")
-
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(623.5, 233.25)
-shape = SubResource("RectangleShape2D_tua43")
-
-[node name="StaticBody2D2" type="StaticBody2D" parent="."]
-position = Vector2(0, -34)
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D2"]
-position = Vector2(-235.5, 388.25)
-shape = SubResource("RectangleShape2D_csxb2")
-one_way_collision = true
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2"]
-position = Vector2(-235.5, 389.5)
-scale = Vector2(3.92969, 0.429688)
-texture = ExtResource("1_tuu3t")
-
-[connection signal="input_event" from="StaticBody2D" to="CharacterBody2D" method="_on_static_body_2d_input_event"]
-[connection signal="mouse_shape_entered" from="StaticBody2D" to="CharacterBody2D" method="_on_static_body_2d_mouse_shape_entered"]
-[connection signal="area_entered" from="StaticBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_area_entered"]
-[connection signal="body_entered" from="StaticBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_body_entered"]
-[connection signal="area_entered" from="StaticBody2D/Area2D3" to="CharacterBody2D" method="_on_area_2d_area_entered"]
-[connection signal="body_entered" from="StaticBody2D/Area2D3" to="CharacterBody2D" method="_on_area_2d_body_entered"]
-[connection signal="body_entered" from="StaticBody2D/Area2D3" to="CharacterBody2D" method="_on_area_2d_3_body_entered"]
-[connection signal="area_entered" from="StaticBody2D/Area2D2" to="CharacterBody2D" method="_on_area_2d_2_area_entered"]
-[connection signal="body_entered" from="StaticBody2D/Area2D2" to="CharacterBody2D" method="_on_area_2d_2_body_entered"]

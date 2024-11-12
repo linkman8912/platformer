@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://xmrad5wg2fwe"]
+[gd_scene load_steps=11 format=3 uid="uid://xmrad5wg2fwe"]
 
 [ext_resource type="Script" path="res://CharacterBody2D.gd" id="1_66rbi"]
 [ext_resource type="Texture2D" uid="uid://gdyow4tqxlnl" path="res://icon.svg" id="1_tuu3t"]
@@ -7,22 +7,25 @@
 size = Vector2(126, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7rbqf"]
-size = Vector2(1147, 7)
+size = Vector2(1148.5, 7)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xku31"]
-size = Vector2(9, 673)
+size = Vector2(9, 647.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0juxp"]
-size = Vector2(8, 671.5)
+size = Vector2(8, 648)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lhxya"]
-size = Vector2(1173, 5)
+size = Vector2(1158, 5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qma2q"]
 size = Vector2(12, 548)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d708l"]
-size = Vector2(759, 30)
+size = Vector2(761.5, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pgph2"]
+size = Vector2(288.5, 30)
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(644, 87)
@@ -39,9 +42,11 @@ texture = ExtResource("1_tuu3t")
 shape = SubResource("RectangleShape2D_0xns4")
 
 [node name="RayCastLeft" type="RayCast2D" parent="Character"]
+scale = Vector2(1, 100)
 target_position = Vector2(-70, 0)
 
 [node name="RayCastRight" type="RayCast2D" parent="Character"]
+scale = Vector2(1, 100)
 target_position = Vector2(70, 0)
 
 [node name="Timer" type="Timer" parent="Character"]
@@ -49,19 +54,19 @@ target_position = Vector2(70, 0)
 [node name="WallsAndFloors" type="StaticBody2D" parent="."]
 
 [node name="Floor" type="CollisionShape2D" parent="WallsAndFloors"]
-position = Vector2(-71, 559.5)
+position = Vector2(-71.75, 559.5)
 shape = SubResource("RectangleShape2D_7rbqf")
 
 [node name="FarLeftWall" type="CollisionShape2D" parent="WallsAndFloors"]
-position = Vector2(-650.5, 252)
+position = Vector2(-650.5, 239.25)
 shape = SubResource("RectangleShape2D_xku31")
 
 [node name="FarRightWall" type="CollisionShape2D" parent="WallsAndFloors"]
-position = Vector2(504, 251.75)
+position = Vector2(504, 240)
 shape = SubResource("RectangleShape2D_0juxp")
 
 [node name="Ceiling" type="CollisionShape2D" parent="WallsAndFloors"]
-position = Vector2(-63.5, -82.5)
+position = Vector2(-71, -82.5)
 shape = SubResource("RectangleShape2D_lhxya")
 
 [node name="MidWall" type="CollisionShape2D" parent="WallsAndFloors"]
@@ -81,4 +86,23 @@ shape = SubResource("RectangleShape2D_d708l")
 [node name="Sprite2D" type="Sprite2D" parent="WallsAndFloors/Platform"]
 position = Vector2(-1, 1)
 scale = Vector2(5.92188, 0.234375)
+texture = ExtResource("1_tuu3t")
+
+[node name="Platform2" type="CollisionShape2D" parent="WallsAndFloors"]
+position = Vector2(-349.75, 265)
+shape = SubResource("RectangleShape2D_pgph2")
+
+[node name="Sprite2D" type="Sprite2D" parent="WallsAndFloors/Platform2"]
+position = Vector2(0.750015, 1)
+scale = Vector2(2.23438, 0.234375)
+texture = ExtResource("1_tuu3t")
+
+[node name="Platform3" type="CollisionShape2D" parent="WallsAndFloors"]
+position = Vector2(-335.75, 117)
+scale = Vector2(1.5, 1)
+shape = SubResource("RectangleShape2D_pgph2")
+
+[node name="Sprite2D" type="Sprite2D" parent="WallsAndFloors/Platform3"]
+position = Vector2(0.750015, 1)
+scale = Vector2(2.23438, 0.234375)
 texture = ExtResource("1_tuu3t")

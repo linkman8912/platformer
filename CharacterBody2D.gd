@@ -13,15 +13,23 @@ const WALLJUMP_TIME = 0.2
  # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var direction = Input.get_axis("ui_left", "ui_right")
-var walljumped = 0 # This is the direction of the walljump, between -1 and 1, -1 (and anything below -0.2) being that a wall towards the right was walljumped off of and that the character should move to the left, 1 (and anything above 0.2) being the opposite directon, and 0 (or anything within 0.2 of 0 for bug reasons) being not walljumping. It also acts as the timer for how long the walljump should last, going down by a certain amount each frame.
-var walljumpedLast = 0 # this variable is similar to walljumped in that it uses -1, 0, and 1 for left, right and off, but it stores whatever the most recent walljump that occurs was so that you have to jump off a wall of the opposite side, a workaround because I don't want to figure out the correct speed to move to not be able to wallclimb on a single wall.
+var walljumped = 0 # This is the direction of the walljump, between -1 and 1, -1 (and anything below -0.2) 
+# being that a wall towards the right was walljumped off of and that the character should move to the left, 
+# 1 (and anything above 0.2) being the opposite directon
+# and 0 (or anything within 0.2 of 0 for bug reasons) being not walljumping. 
+#It also acts as the timer for how long the walljump should last
+# going down by a certain amount each frame.
+var walljumpedLast = 0 # this variable is similar to walljumped in that it uses -1, 0, and 1 for left, right and off, 
+# but it stores whatever the most recent walljump that occurs was so that you have to jump off a wall of the opposite side, 
+# a workaround because I don't want to figure out the correct speed to move 
+# so that you can't wallclimb on a single wall.
 var oldYvelocity = 0
 var walljumpY = 600
 var walljumpX = 600
 var hasDashed = 0
 var dashState = 0
 var dashDirection = 0
-var justWalljumped = false
+var justWalljumped = false 
 
 # Node References
 @onready var rayCastLeftNode = $RayCastLeft
@@ -47,7 +55,7 @@ func _physics_process(delta):
 #			walljumped = 1
 #		elif onWall == 1:
 #			walljumped = -1 
-		elif rayCastLeftNode.is_colliding() or rayCastRightNode.is_colliding():
+		elif (rayCastLeftNode.is_colliding() or rayCastRightNode.is_colliding()) and walljumped == 0:
 			if rayCastLeftNode.is_colliding() and walljumpedLast != 1:
 				velocity.y = -walljumpY
 				walljumped = 1

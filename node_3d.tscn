@@ -50,9 +50,10 @@ scale = Vector2(1, 100)
 target_position = Vector2(70, 0)
 
 [node name="DashTimer" type="Timer" parent="Character"]
+wait_time = 0.15
 
 [node name="WalljumpTimer" type="Timer" parent="Character"]
-wait_time = 0.5
+wait_time = 0.3
 
 [node name="WallsAndFloors" type="StaticBody2D" parent="."]
 
@@ -110,4 +111,5 @@ position = Vector2(0.750015, 1)
 scale = Vector2(2.23438, 0.234375)
 texture = ExtResource("1_tuu3t")
 
+[connection signal="timeout" from="Character/DashTimer" to="Character" method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="Character/WalljumpTimer" to="Character" method="_on_walljump_timer_timeout"]

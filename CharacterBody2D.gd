@@ -9,6 +9,7 @@ const JUMP_POWER = 300
 const MAX_DOWN_VEL = 500
 const WALL_JUMP_POWER = 500
 const WALLJUMP_TIME = 0.2
+const DASHSPEED = SPEED * 5
 
  # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -30,6 +31,7 @@ var hasDashed = 0
 var dashState = false
 var dashDirection = [0, 0]
 var justWalljumped = false 
+var wasDashing = false
 
 # Node References 
 @onready var rayCastLeftNode = $RayCastLeft
@@ -38,6 +40,10 @@ var justWalljumped = false
 @onready var walljumpTimer = $WalljumpTimer
 
 func _physics_process(delta):
+	if wasDashing and not dashState:
+		velocity.y = 0
+		velocity.x = 0
+		wasDashing = false
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -50,6 +56,8 @@ func _physics_process(delta):
 		dashState = true
 		hasDashed = true
 		dashDirection = get_direction()
+		dashTimer.start()
+		wasDashing = true
 
 	# Handle jump.
 	if Input.is_action_pressed("Jump"):
@@ -91,8 +99,8 @@ func _physics_process(delta):
 	elif dashState == true:
 		# dashDirection = get_direction()
 		# dashState = 1
-		velocity.x = SPEED * 4 * dashDirection[0]
-		velocity.y = SPEED * 4 * dashDirection[1]
+		velocity.x = DASHSPEED * dashDirection[0]
+		velocity.y = DASHSPEED * dashDirection[1] * -1
 		print("dashDirection = " + str(dashDirection))
 	elif direction:
 		velocity.x = direction * SPEED
@@ -155,3 +163,8 @@ func _on_walls_and_floors_collisions_body_exited(_body):
 
 func _on_walljump_timer_timeout() -> void:
 	walljumped = 0
+
+
+func _on_dash_timer_timeout() -> void:
+	pass # Replace with function body.
+	dashState = false

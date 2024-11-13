@@ -27,8 +27,8 @@ var oldYvelocity = 0
 var walljumpY = 600
 var walljumpX = 600
 var hasDashed = 0
-var dashState = 0
-var dashDirection = 0
+var dashState = false
+var dashDirection = [0, 0]
 var justWalljumped = false 
 
 # Node References
@@ -45,7 +45,9 @@ func _physics_process(delta):
 		hasDashed = false
 
 	if Input.is_action_just_pressed("Dash") and hasDashed == false:
-		dashState = 2
+		dashState = true
+		hasDashed = true
+		dashDirection = get_direction()
 
 	# Handle jump.
 	if Input.is_action_pressed("Jump"):
@@ -68,7 +70,6 @@ func _physics_process(delta):
 				print("walljumped right")
 	direction = Input.get_axis("Left", "Right")
 	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
 	if walljumped != 0:
 		if is_on_floor():
 			walljumped = 0
@@ -78,27 +79,34 @@ func _physics_process(delta):
 		elif walljumped < -0.2:
 			walljumped += 0.1
 			velocity.x = SPEED * -2
-		#elif walljumped > 0.5: # Slow down the walljump towards the end so that it's a bit more natural
+		# elif walljumped > 0.5: # Slow down the walljump towards the end so that it's a bit more natural
 			#walljumped -= 0.1
 			#velocity.x = SPEED * (walljumped * 2)
-		#elif walljumped < -0.5:
+		# elif walljumped < -0.5:
 			#walljumped += 0.1
 			#velocity.x = SPEED * (walljumped *  2)
 		else:
 			walljumped = 0
-	elif dashState != 0:
-		if dashState < 0.2:
-			dashState = 0
-		else:
-			pass # should use direction to figure out where to move
+	elif dashState == true:
+		# dashDirection = get_direction()
+		# dashState = 1
+		velocity.x = SPEED * 4 * dashDirection[0]
+		velocity.y = SPEED * 4 * dashDirection[1]
+		print("dashDirection = " + str(dashDirection))
 	elif direction:
 		velocity.x = direction * SPEED
-	else:
+	else :
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
 func _ready():
 	walljumped = 0
+
+func get_direction():
+	# dashDirection[0] = Input.get_axis("Left", "Right")
+	# dashDirection[1] = Input.get_axis("Down", "Up") 
+	return [Input.get_axis("Left", "Right"), Input.get_axis("Down", "Up")]
+
 '''
 func _on_area_2d_2_body_entered(body):
 	if walljumpedLast != 1 and Input.is_action_pressed("ui_accept"):

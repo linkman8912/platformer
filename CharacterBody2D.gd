@@ -31,9 +31,11 @@ var dashState = false
 var dashDirection = [0, 0]
 var justWalljumped = false 
 
-# Node References
+# Node References 
 @onready var rayCastLeftNode = $RayCastLeft
 @onready var rayCastRightNode = $RayCastRight
+@onready var dashTimer = $DashTimer
+@onready var walljumpTimer = $WalljumpTimer
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -63,21 +65,20 @@ func _physics_process(delta):
 				walljumped = 1
 				walljumpedLast = 1
 				print("walljumped left")
-			if rayCastRightNode.is_colliding() and walljumpedLast != -1:
+			elif rayCastRightNode.is_colliding() and walljumpedLast != -1:
 				velocity.y = -walljumpY
 				walljumped = -1
 				walljumpedLast = -1
 				print("walljumped right")
+			walljumpTimer.start()
 	direction = Input.get_axis("Left", "Right")
 	# Get the input direction and handle the movement/deceleration.
 	if walljumped != 0:
 		if is_on_floor():
 			walljumped = 0
 		elif walljumped > 0.2:
-			walljumped -= 0.1
 			velocity.x = SPEED * 2
 		elif walljumped < -0.2:
-			walljumped += 0.1
 			velocity.x = SPEED * -2
 		# elif walljumped > 0.5: # Slow down the walljump towards the end so that it's a bit more natural
 			#walljumped -= 0.1
@@ -95,7 +96,7 @@ func _physics_process(delta):
 		print("dashDirection = " + str(dashDirection))
 	elif direction:
 		velocity.x = direction * SPEED
-	else :
+	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
@@ -106,6 +107,7 @@ func get_direction():
 	# dashDirection[0] = Input.get_axis("Left", "Right")
 	# dashDirection[1] = Input.get_axis("Down", "Up") 
 	return [Input.get_axis("Left", "Right"), Input.get_axis("Down", "Up")]
+
 
 '''
 func _on_area_2d_2_body_entered(body):
@@ -149,3 +151,7 @@ func _on_walls_and_floors_collisions_body_exited(_body):
 	onWall = 0
 	print("off wall")
 '''
+
+
+func _on_walljump_timer_timeout() -> void:
+	walljumped = 0

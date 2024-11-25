@@ -42,7 +42,6 @@ var wasDashing = false
 func _physics_process(delta):
 	if wasDashing and not dashState:
 		velocity.y = 0
-		velocity.x = 0
 		wasDashing = false
 	# Add the gravity.
 	if not is_on_floor():
@@ -53,11 +52,12 @@ func _physics_process(delta):
 		hasDashed = false
 
 	if Input.is_action_just_pressed("Dash") and hasDashed == false:
-		dashState = true
-		hasDashed = true
 		dashDirection = get_direction()
-		dashTimer.start()
-		wasDashing = true
+		if dashDirection[0] != 0 or dashDirection[1] != 0:
+			dashState = true
+			hasDashed = true
+			dashTimer.start()
+			wasDashing = true
 
 	# Handle jump.
 	if Input.is_action_pressed("Jump"):
@@ -67,13 +67,13 @@ func _physics_process(delta):
 #			walljumped = 1
 #		elif onWall == 1:
 #			walljumped = -1 
-		elif (rayCastLeftNode.is_colliding() or rayCastRightNode.is_colliding()) and walljumped == 0:
-			if rayCastLeftNode.is_colliding() and walljumpedLast != 1:
+		elif (rayCastLeftNode.is_colliding() or rayCastRightNode.is_colliding()) and walljumped == 0 and not is_on_floor():
+			if rayCastLeftNode.is_colliding(): #and walljumpedLast != 1:
 				velocity.y = -walljumpY
 				walljumped = 1
 				walljumpedLast = 1
 				print("walljumped left")
-			elif rayCastRightNode.is_colliding() and walljumpedLast != -1:
+			elif rayCastRightNode.is_colliding(): #and walljumpedLast != -1: # removed the check because the walljump doesn't actually give enough velocity to climb a single wall.
 				velocity.y = -walljumpY
 				walljumped = -1
 				walljumpedLast = -1
@@ -89,11 +89,11 @@ func _physics_process(delta):
 		elif walljumped < -0.2:
 			velocity.x = SPEED * -2
 		# elif walljumped > 0.5: # Slow down the walljump towards the end so that it's a bit more natural
-			#walljumped -= 0.1
-			#velocity.x = SPEED * (walljumped * 2)
+			# walljumped -= 0.1
+			# velocity.x = SPEED * (walljumped * 2)
 		# elif walljumped < -0.5:
-			#walljumped += 0.1
-			#velocity.x = SPEED * (walljumped *  2)
+			# walljumped += 0.1
+			# velocity.x = SPEED * (walljumped *  2)
 		else:
 			walljumped = 0
 	elif dashState == true:
@@ -104,7 +104,7 @@ func _physics_process(delta):
 		print("dashDirection = " + str(dashDirection))
 	elif direction:
 		velocity.x = direction * SPEED
-	else:
+	else: 
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
@@ -166,5 +166,4 @@ func _on_walljump_timer_timeout() -> void:
 
 
 func _on_dash_timer_timeout() -> void:
-	pass # Replace with function body.
 	dashState = false

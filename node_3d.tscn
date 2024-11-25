@@ -61,17 +61,35 @@ wait_time = 0.3
 position = Vector2(-71.75, 559.5)
 shape = SubResource("RectangleShape2D_7rbqf")
 
+[node name="Sprite2D" type="Sprite2D" parent="WallsAndFloors/Floor"]
+position = Vector2(0.250031, 2.28882e-05)
+scale = Vector2(9.05469, 0.0390628)
+texture = ExtResource("1_tuu3t")
+
 [node name="FarLeftWall" type="CollisionShape2D" parent="WallsAndFloors"]
-position = Vector2(-650.5, 239.25)
+position = Vector2(-637.5, 239.25)
 shape = SubResource("RectangleShape2D_xku31")
+
+[node name="Sprite2D" type="Sprite2D" parent="WallsAndFloors/FarLeftWall"]
+position = Vector2(1.90735e-06, -0.25)
+scale = Vector2(0.0859375, 5.04688)
+texture = ExtResource("1_tuu3t")
 
 [node name="FarRightWall" type="CollisionShape2D" parent="WallsAndFloors"]
 position = Vector2(504, 240)
 shape = SubResource("RectangleShape2D_0juxp")
 
+[node name="Sprite2D" type="Sprite2D" parent="WallsAndFloors/FarRightWall"]
+scale = Vector2(0.068947, 5.05485)
+texture = ExtResource("1_tuu3t")
+
 [node name="Ceiling" type="CollisionShape2D" parent="WallsAndFloors"]
 position = Vector2(-71, -82.5)
 shape = SubResource("RectangleShape2D_lhxya")
+
+[node name="Sprite2D" type="Sprite2D" parent="WallsAndFloors/Ceiling"]
+scale = Vector2(9.00839, 0.0707396)
+texture = ExtResource("1_tuu3t")
 
 [node name="MidWall" type="CollisionShape2D" parent="WallsAndFloors"]
 position = Vector2(238, 310)

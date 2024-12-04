@@ -73,7 +73,7 @@ func _physics_process(delta):
 				walljumped = 1
 				walljumpedLast = 1
 				print("walljumped left")
-			elif rayCastRightNode.is_colliding(): #and walljumpedLast != -1: # removed the check because the walljump doesn't actually give enough velocity to climb a single wall.
+			elif rayCastRightNode.is_colliding(): #and walljumpedLast != -1: # removed the check because the walljump doesn't actually give enough velocity to climb a single wall. 
 				velocity.y = -walljumpY
 				walljumped = -1
 				walljumpedLast = -1
